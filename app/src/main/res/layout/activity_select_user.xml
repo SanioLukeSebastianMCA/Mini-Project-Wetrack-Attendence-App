@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/selectuser_mainlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    tools:context=".Activities.SelectUserActivity">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/we_track_icon" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:text="Picks one that suits you the best"
+        android:textAlignment="center" />
+
+    <RadioGroup
+        android:id="@+id/select_radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/owner_radio_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_checkbox"
+            android:button="@android:color/transparent"
+            android:checked="false"
+            android:fontFamily="@font/poppins_semibold"
+            android:padding="20dp"
+            android:text="I own a business"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/employee_radio_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/custom_checkbox"
+            android:button="@android:color/transparent"
+            android:checked="false"
+            android:fontFamily="@font/poppins_semibold"
+            android:padding="20dp"
+            android:text="I'm an employee"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/manager_radio_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/custom_checkbox"
+            android:button="@android:color/transparent"
+            android:checked="false"
+            android:fontFamily="@font/poppins_semibold"
+            android:padding="20dp"
+            android:text="I'm a manager"
+            android:textAlignment="center" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/selectuser_submitbtn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#DADADA"
+        android:enabled="false"
+        android:text="Continue" />
+
+</LinearLayout>
