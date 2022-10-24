@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "890104002530",
+    "project_id": "wetrack-45cb2",
+    "storage_bucket": "wetrack-45cb2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890104002530:android:c2d3ade8c63012b64cabbb",
+        "android_client_info": {
+          "package_name": "com.sanioluke00.wetrack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "890104002530-a57ah8lhjokpl2g0ijbkdef7s9c9621v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sanioluke00.wetrack",
+            "certificate_hash": "09ff75d8efe41dc37a790f347881c166e151bcf5"
+          }
+        },
+        {
+          "client_id": "890104002530-7p6jsht5g3umkjve8s43clcj1vdnauaa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtZ7bZg-e2TX--8XnLaXxo0hW8KkdfMFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "890104002530-7p6jsht5g3umkjve8s43clcj1vdnauaa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
