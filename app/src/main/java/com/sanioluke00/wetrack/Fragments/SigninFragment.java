@@ -13,22 +13,30 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hbb20.CountryCodePicker;
 import com.sanioluke00.wetrack.R;
 
+import java.util.List;
 import java.util.Objects;
 
 public class SigninFragment extends Fragment {
 
-    FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
     String selected_user;
     private RelativeLayout signinfrag_maincontainer;
     private LinearLayout signinfrag_contentcontainer;
@@ -62,6 +70,10 @@ public class SigninFragment extends Fragment {
     };
     private CountryCodePicker signinfrag_ccpicker;
 
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
+    FirebaseFirestore db;
+
     public SigninFragment(String selected_user) {
         this.selected_user = selected_user;
     }
@@ -77,6 +89,10 @@ public class SigninFragment extends Fragment {
         signinfrag_termscheck = v.findViewById(R.id.signinfrag_termscheck);
         signinfrag_proceed_btn = v.findViewById(R.id.signinfrag_proceed_btn);
         signinfrag_ccpicker = v.findViewById(R.id.signinfrag_ccpicker);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        db = FirebaseFirestore.getInstance();
 
         signinfrag_proceed_btn.setEnabled(false);
         signinfrag_phonenum.getEditText().addTextChangedListener(inputPhoneTextWatcher);
@@ -97,21 +113,55 @@ public class SigninFragment extends Fragment {
         });
 
         signinfrag_proceed_btn.setOnClickListener(v1 -> {
-
-            OtpPhoneFragment OtpPhoneFragment = new OtpPhoneFragment();
-            Bundle args = new Bundle();
-            args.putString("reg_phonenum", signinfrag_phonenum.getEditText().getText().toString());
-            args.putString("reg_countrycode", signinfrag_ccpicker.getSelectedCountryCodeWithPlus());
-            args.putString("reg_selecteduser", selected_user);
-            OtpPhoneFragment.setArguments(args);
-
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            transaction.replace(R.id.signin_maincontainer, OtpPhoneFragment);
-            transaction.commit();
+            if (selected_user.equals("Employees")) {
+                checkPersonTable(false, true);
+            } else if (selected_user.equals("Managers")) {
+                checkPersonTable(false, false);
+            }
+            else{
+                loadOtpPage(true);
+            }
         });
 
         return v;
+    }
+
+    // "[a-zA-Z]{3,20}"
+    private void checkPersonTable(boolean isMain, boolean isEmployee) {
+
+        String dbname= isEmployee ? (isMain ? "Employees" : "TempEmployees") : (isMain ? "Managers": "TempManagers");
+        String contactnum_field= isEmployee ? "emp_contact" : "manager_contact";
+        String ccode_field= isEmployee ? "emp_countrycode" : "manager_countrycode";
+
+        db.collection(dbname)
+                .whereEqualTo(contactnum_field, signinfrag_phonenum.getEditText().getText().toString())
+                .whereEqualTo(ccode_field, signinfrag_ccpicker.getSelectedCountryCodeWithPlus())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult().getDocuments().size() > 0)
+                        loadOtpPage(isMain);
+                    else{
+                        if(!isMain)
+                            checkPersonTable(true, isEmployee);
+                        else
+                            Snackbar.make(signinfrag_maincontainer,"Unable to find account !! Please try a valid number !!",Snackbar.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void loadOtpPage(boolean ismain) {
+        OtpPhoneFragment OtpPhoneFragment = new OtpPhoneFragment();
+        Bundle args = new Bundle();
+        args.putString("reg_phonenum", signinfrag_phonenum.getEditText().getText().toString());
+        args.putString("reg_countrycode", signinfrag_ccpicker.getSelectedCountryCodeWithPlus());
+        args.putString("reg_selecteduser", selected_user);
+        args.putBoolean("reg_ismaintable", ismain);
+        OtpPhoneFragment.setArguments(args);
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        transaction.replace(R.id.signin_maincontainer, OtpPhoneFragment);
+        transaction.commit();
     }
 
     private void updateProceedBtnStyle(String s, boolean b) {

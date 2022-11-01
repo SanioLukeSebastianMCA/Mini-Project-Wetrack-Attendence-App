@@ -18,6 +18,9 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.sanioluke00.wetrack.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -28,10 +31,14 @@ import java.util.Date;
 //@SuppressWarnings("all")
 public class Functions {
 
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+    private FirebaseFirestore db;
+
     public void checkTheme(@NotNull Context context) {
 
-        SharedPreferences prefs = context.getSharedPreferences("get_all_data", MODE_PRIVATE);
-        int isCheck = prefs.getInt("get_theme", 0);
+        SharedPreferences prefs_2 = context.getSharedPreferences("app_data", Activity.MODE_PRIVATE);
+        int isCheck = prefs_2.getInt("get_theme", 0);
 
         if (isCheck == 0) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -44,19 +51,16 @@ public class Functions {
         }
     }
 
-    public void whiteStatusBarDesign(@NotNull Activity activity) {
-        activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        activity.getWindow().setStatusBarColor(activity.getResources().getColor(R.color.white));
-    }
-
-    public void darkStatusBarDesign(@NotNull Activity activity) {
+    public void darkstatusbardesign(@NotNull Activity activity) {
         activity.getWindow().getDecorView().setSystemUiVisibility(activity.getWindow().getDecorView().getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        activity.getWindow().setStatusBarColor(activity.getResources().getColor(R.color.black));
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        activity.getWindow().setStatusBarColor(activity.getResources().getColor(R.color.heading_no));
     }
 
     public void lightstatusbardesign(@NotNull Activity activity) {
 
-        SharedPreferences prefs_2 = activity.getSharedPreferences("get_all_data", MODE_PRIVATE);
+        SharedPreferences prefs_2 = activity.getSharedPreferences("app_data", Activity.MODE_PRIVATE);
         int isCheck = prefs_2.getInt("get_theme", 0);
 
         if (isCheck == 0) {
@@ -86,7 +90,7 @@ public class Functions {
 
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        activity.getWindow().setStatusBarColor(activity.getResources().getColor(R.color.text_color));
+        activity.getWindow().setStatusBarColor(activity.getResources().getColor(R.color.status_white));
     }
 
     public void setStatusBarColor(@NotNull Activity activity, int color_id) {

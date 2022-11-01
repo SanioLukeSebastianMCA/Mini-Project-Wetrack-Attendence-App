@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:id="@+id/workeritem_mainlay">
+
+
+    <TextView
+        android:id="@+id/workeritem_wname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Worker Name"
+        android:textSize="17sp"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="3">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/curve_border"
+            app:backgroundTint="@color/my_red"
+            android:text="Absent"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/curve_border"
+            app:backgroundTint="@color/my_yellow"
+            android:layout_marginLeft="10dp"
+            android:text="Half Day"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/curve_border"
+            app:backgroundTint="@color/my_green"
+            android:layout_marginLeft="10dp"
+            android:text="Present"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -19,11 +19,15 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,11 +37,13 @@ import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.sanioluke00.wetrack.Activities.HomeActivity;
 import com.sanioluke00.wetrack.DataModels.Functions;
 import com.sanioluke00.wetrack.R;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -49,6 +55,7 @@ import in.aabhasjindal.otptextview.OtpTextView;
 public class OtpPhoneFragment extends Fragment {
 
     private String phonenum, countrycode, selecteduser;
+    boolean reg_ismaintable;
     private RelativeLayout otp_main_container;
     private LinearLayout otp_resend_lay, otp_countdown_resendotp_lay;
     private TextView otp_resentotp_btn;
@@ -79,7 +86,8 @@ public class OtpPhoneFragment extends Fragment {
 
                 @Override
                 public void onVerificationFailed(@NonNull FirebaseException e) {
-                    Snackbar.make(otp_main_container, "Verification Failed !!", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(otp_main_container, "Verification Failed !!" + e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Failed !!" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -127,6 +135,7 @@ public class OtpPhoneFragment extends Fragment {
             phonenum = getArguments().getString("reg_phonenum");
             countrycode = getArguments().getString("reg_countrycode");
             selecteduser = getArguments().getString("reg_selecteduser");
+            reg_ismaintable = getArguments().getBoolean("reg_ismaintable");
             otp_subheading_txt.setText(Html.fromHtml("Please enter the veritication code send to <b>" + countrycode + "-" + phonenum + "</b>"));
             if (phonenum == null || countrycode == null) {
                 returnBackSigninFrag();
@@ -199,11 +208,22 @@ public class OtpPhoneFragment extends Fragment {
                 TextView loading_txt = processUserAccDialog.findViewById(R.id.loading_txt);
 
                 new Handler().postDelayed(() -> {
-                    if (task.getResult().getAdditionalUserInfo().isNewUser()) {
-                        addUserData();
-                        proceedForAddingDetails("Account Created Successfully.", processUserAccDialog, loading_prog, loading_verified_img, loading_txt);
-                    } else {
-                        processUserDataStatus(processUserAccDialog, loading_prog, loading_verified_img, loading_txt);
+                    Log.e("selecteduser", "The usertype is " + selecteduser);
+                    if (selecteduser.equals("Owners")) {
+                        if (task.getResult().getAdditionalUserInfo().isNewUser()) {
+                            addUserData();
+                            proceedForAddingDetails("Account Created Successfully.", processUserAccDialog, loading_prog, loading_verified_img, loading_txt);
+                        } else {
+                            processUserDataStatus(processUserAccDialog, loading_prog, loading_verified_img, loading_txt);
+                        }
+                    }
+                    else {
+                        boolean isEmployee = (selecteduser.equals("Employees")) ? true : false;
+                        if (task.getResult().getAdditionalUserInfo().isNewUser()) {
+                            addEmpManagerDetails(isEmployee, task.getResult().getUser().getUid(), processUserAccDialog, loading_prog, loading_verified_img, loading_txt);
+                        } else {
+                            loadEmpManagerHome(isEmployee, task.getResult().getUser().getUid(), processUserAccDialog, loading_prog, loading_verified_img, loading_txt);
+                        }
                     }
                 }, 1000);
                 processUserAccDialog.show();
@@ -217,8 +237,112 @@ public class OtpPhoneFragment extends Fragment {
         });
     }
 
+    private void loadEmpManagerHome(boolean isEmployee, String user, Dialog processUserAccDialog, ProgressBar loading_prog, ImageView loading_verified_img, TextView loading_txt) {
+        String pstatus_field = isEmployee ? "emp_status" : "manager_status";
+        String pname_field = isEmployee ? "emp_name" : "manager_name";
+        String pcontact_field = isEmployee ? "emp_contact" : "manager_contact";
+        String pcountrycode_field = isEmployee ? "emp_countrycode" : "manager_countrycode";
+        String dbname = isEmployee ? "Employees" : "Managers";
+
+        db.collection(dbname)
+                .document(user)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        loading_prog.setVisibility(View.VISIBLE);
+                        loading_verified_img.setVisibility(View.GONE);
+                        loading_txt.setText("Login Successful.\nRedirecting to Home Page...");
+
+                        DocumentSnapshot userdata = task.getResult();
+                        new Functions().putSharedPrefsValue(getContext(), "user_data", "login_status", "boolean", true);
+                        new Functions().putSharedPrefsValue(getContext(), "user_data", "ptype", "string", selecteduser);
+                        new Functions().putSharedPrefsValue(getContext(), "user_data", "pstatus", "boolean", userdata.getBoolean(pstatus_field));
+                        new Functions().putSharedPrefsValue(getContext(), "user_data", "pname", "string", userdata.getString(pname_field));
+                        new Functions().putSharedPrefsValue(getContext(), "user_data", "pcontact", "string", userdata.getString(pcontact_field));
+                        new Functions().putSharedPrefsValue(getContext(), "user_data", "pcountrycode", "string", userdata.getString(pcountrycode_field));
+                        new Functions().putSharedPrefsValue(getContext(), "user_data", "pcompanypath", "string", userdata.getDocumentReference("company_path").getPath());
+
+                        new Handler().postDelayed(() -> {
+                            processUserAccDialog.dismiss();
+                            startActivity(new Intent(getContext(), HomeActivity.class));
+                            getActivity().overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        }, 1000);
+                    }
+                });
+    }
+
+    private void addEmpManagerDetails(boolean isEmployee, String user, Dialog processUserAccDialog, ProgressBar loading_prog, ImageView loading_verified_img, TextView loading_txt) {
+
+        String pstatus_field = isEmployee ? "emp_status" : "manager_status";
+        String pname_field = isEmployee ? "emp_name" : "manager_name";
+        String pcontact_field = isEmployee ? "emp_contact" : "manager_contact";
+        String pcountrycode_field = isEmployee ? "emp_countrycode" : "manager_countrycode";
+        String dbname = isEmployee ? "Employees" : "Managers";
+        String tempdbname = isEmployee ? "TempEmployees" : "TempManagers";
+        String contactnum_field= isEmployee ? "emp_contact" : "manager_contact";
+        String ccode_field= isEmployee ? "emp_countrycode" : "manager_countrycode";
+
+        db.collection(tempdbname)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            Map<String, Object> persondata = new HashMap<>();
+                            List<DocumentSnapshot> alldoc= task.getResult().getDocuments();
+                            for(DocumentSnapshot doc : alldoc){
+                                String phone= doc.getString(pcontact_field);
+                                String code= doc.getString(pcountrycode_field);
+                                if(phone.equals(phonenum) && code.equals(countrycode)){
+                                    persondata.put(pname_field, doc.getString(pname_field));
+                                    persondata.put(pcontact_field, doc.getString(pcontact_field));
+                                    persondata.put(pstatus_field, true);
+                                    persondata.put(pcountrycode_field, doc.getString(pcountrycode_field));
+                                    persondata.put("company_path", doc.getDocumentReference("company_path"));
+                                    doc.getReference().delete();
+                                    break;
+                                }
+                            }
+
+                            if(!persondata.isEmpty()){
+                                db.collection(dbname)
+                                        .document(user)
+                                        .set(persondata)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                loading_prog.setVisibility(View.VISIBLE);
+                                                loading_verified_img.setVisibility(View.GONE);
+                                                loading_txt.setText("Account Created Successfully..\nRedirecting to Home Page...");
+
+                                                new Handler().postDelayed(() -> {
+                                                    processUserAccDialog.dismiss();
+                                                    startActivity(new Intent(getContext(), HomeActivity.class));
+                                                    getActivity().finish();
+                                                }, 2000);
+                                            }
+                                        });
+                            }
+                            else{
+                                Log.e("person_error","No user found !!");
+                            }
+                        }
+                        else{
+                            Log.e("person_error","No Document !!");
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("person_error","Get Failed !");
+                    }
+                });
+    }
+
     private void processUserDataStatus(Dialog processUserAccDialog, ProgressBar loading_prog, ImageView loading_verified_img, TextView loading_txt) {
-        Log.e("page_error", "processUserDataStatus start....");
+
         db.collection(selecteduser)
                 .document(firebaseUser.getUid())
                 .get()
@@ -230,8 +354,9 @@ public class OtpPhoneFragment extends Fragment {
                             loading_verified_img.setVisibility(View.GONE);
                             loading_txt.setText("Login Successful.\nRedirecting to Home Page...");
 
-                            DocumentSnapshot userdata= task1.getResult();
+                            DocumentSnapshot userdata = task1.getResult();
                             new Functions().putSharedPrefsValue(getContext(), "user_data", "login_status", "boolean", true);
+                            new Functions().putSharedPrefsValue(getContext(), "user_data", "ptype", "string", selecteduser);
                             new Functions().putSharedPrefsValue(getContext(), "user_data", "full_name", "string", userdata.getString("full_name"));
                             new Functions().putSharedPrefsValue(getContext(), "user_data", "country_code", "string", userdata.getString("county_code"));
                             new Functions().putSharedPrefsValue(getContext(), "user_data", "contact_num", "string", userdata.getString("contact_number"));
@@ -252,11 +377,9 @@ public class OtpPhoneFragment extends Fragment {
                         processUserDataStatus(processUserAccDialog, loading_prog, loading_verified_img, loading_txt);
                     }
                 });
-        Log.e("page_error", "processUserDataStatus end....");
     }
 
     private void proceedForAddingDetails(String loading_string, Dialog processUserAccDialog, @NonNull ProgressBar loading_prog, @NonNull ImageView loading_verified_img, @NonNull TextView loading_txt) {
-        Log.e("page_error", "proceedForAddingDetails start....");
         loading_prog.setVisibility(View.GONE);
         loading_verified_img.setVisibility(View.VISIBLE);
         loading_txt.setText(loading_string);
@@ -274,11 +397,9 @@ public class OtpPhoneFragment extends Fragment {
             transaction.replace(R.id.signin_maincontainer, additionalDetailsFragment);
             transaction.commit();
         }, 1000);
-        Log.e("page_error", "proceedForAddingDetails end....");
     }
 
     private void addUserData() {
-        Log.e("page_error", "addUserData Start....");
         Map<String, Object> userdata = new HashMap<>();
         userdata.put("owner_id", firebaseUser.getUid());
         userdata.put("isDetailsAdded", false);
@@ -289,7 +410,6 @@ public class OtpPhoneFragment extends Fragment {
                 .addOnFailureListener(e -> {
                     addUserData();
                 });
-        Log.e("page_error", "addUserData End....");
     }
 
     private void returnBackSigninFrag() {

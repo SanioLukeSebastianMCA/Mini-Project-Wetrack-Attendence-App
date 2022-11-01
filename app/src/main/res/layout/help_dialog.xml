@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:id="@+id/help_lay_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:gravity="center"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/help_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_light"
+            android:text="We heard you guys\n\n\n* Updated with new exciting places and resolved bugs.\n\n* We have added more images of places and hotels to excite you and letting you know more about the places visually.\n\n* You can retry the cancelled orders and book the same hotel that you tried to order.\n\n* Settings are added with more usable options (Like clear app cache, notifications, etc).\n\n* The user can download your ordered hotel invoice pdf from the booking summary page."
+            android:textColor="#505050"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/app_rate_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:gravity="center"
+            android:text="Give the App a 5 Star rating\nif the app helped you!"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/help_lay_1"
+        android:layout_alignParentEnd="true"
+        android:layout_marginVertical="20dp"
+        android:layout_marginEnd="20dp">
+
+        <TextView
+            android:id="@+id/btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:fontFamily="@font/poppins_semibold"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="8dp"
+            android:text="OK"
+            android:textColor="@color/v_maincolor"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>

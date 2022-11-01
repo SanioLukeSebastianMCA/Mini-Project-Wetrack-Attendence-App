@@ -8,11 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.sanioluke00.wetrack.DataModels.Functions;
 import com.sanioluke00.wetrack.R;
 
@@ -24,6 +29,7 @@ public class HomeFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     FirebaseFirestore db;
+    Functions functions= new Functions();
 
     public HomeFragment() {  }
 
@@ -38,21 +44,18 @@ public class HomeFragment extends Fragment {
         firebaseAuth= FirebaseAuth.getInstance();
         firebaseUser= firebaseAuth.getCurrentUser();
         db= FirebaseFirestore.getInstance();
-        
-        String company_path_str= new Functions().getSharedPrefsValue(getContext(),"user_data","company_path","string",null);
-        if(company_path_str!=null){
 
-            Log.e("comapny_path","The company path is "+company_path_str);
-            /*company_path_str.get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if(task.isSuccessful()){
-                                String name= task.getResult().getString("company_name");
-                                homefrag_business_name.setText(name);
-                            }
+        boolean log_status= functions.getSharedPrefsValue(getContext(),"user_data","login_status","boolean",false);
+        String curr_user= functions.getSharedPrefsValue(getContext(), "user_data", "ptype", "string",null);
+        String comp_path= functions.getSharedPrefsValue(getContext(), "user_data", "company_path", "string",null);
+        if(log_status && curr_user!=null && comp_path!=null){
+            db.document(comp_path)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            homefrag_business_name.setText(task.getResult().getString("company_name"));
                         }
-                    });*/
+                    });
         }
 
         return v;

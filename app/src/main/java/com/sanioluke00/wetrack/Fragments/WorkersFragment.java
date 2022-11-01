@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.hbb20.CountryCodePicker;
 import com.sanioluke00.wetrack.Adapters.AddEmployeesAdapter;
 import com.sanioluke00.wetrack.DataModels.EmployeeModel;
 import com.sanioluke00.wetrack.DataModels.Functions;
@@ -95,12 +96,12 @@ public class WorkersFragment extends Fragment {
                         for(DocumentSnapshot emp : task.getResult().getDocuments()){
                             if(dbname.equals("TempEmployees") || dbname.equals("Employees")){
                                 EmployeeModel emp_model= new EmployeeModel(emp.getDocumentReference("company_path"),
-                                        emp.getString("emp_name"), emp.getString("emp_contact"), emp.getBoolean("emp_status"));
+                                        emp.getString("emp_name"), emp.getString("emp_contact"), emp.getString("emp_countrycode"),emp.getBoolean("emp_status"));
                                 arr.add(emp_model);
                             }
                             else{
                                 EmployeeModel manager_model= new EmployeeModel(emp.getDocumentReference("company_path"),
-                                        emp.getString("manager_name"), emp.getString("manager_contact"), emp.getBoolean("manager_status"));
+                                        emp.getString("manager_name"), emp.getString("manager_contact"), emp.getString("manager_countrycode"), emp.getBoolean("manager_status"));
                                 arr.add(manager_model);
                             }
                         }
@@ -143,6 +144,7 @@ public class WorkersFragment extends Fragment {
         addemp_btm_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextInputLayout aw_btm_name = addemp_btm_dialog.findViewById(R.id.aw_btm_name);
         TextInputLayout aw_btm_phone = addemp_btm_dialog.findViewById(R.id.aw_btm_phone);
+        CountryCodePicker aw_btm_countrycode= addemp_btm_dialog.findViewById(R.id.aw_btm_countrycode);
         Button aw_btm_add_btn = addemp_btm_dialog.findViewById(R.id.aw_btm_add_btn);
 
         aw_btm_add_btn.setEnabled(false);
@@ -205,66 +207,40 @@ public class WorkersFragment extends Fragment {
         });
 
         aw_btm_add_btn.setOnClickListener(v2 -> {
-            Log.e("addWorker","Proceed 01");
             String emp_name = aw_btm_name.getEditText().getText().toString();
             String emp_contact = aw_btm_phone.getEditText().getText().toString();
             String company_path_val = new Functions().getSharedPrefsValue(getContext(), "user_data", "company_path", "string", null);
             if(company_path_val!=null){
-                Log.e("addWorker","Proceed 02");
                 DocumentReference company_path= db.document(company_path_val);
 
-                String worker_name;
-                String worker_contact;
-                String worker_status;
-                String workerDB;
-                String workerRes;
-                String workerFail;
-
-                Log.e("addWorker","Proceed 04");
-
-                if (workerType.equals("Employee")) {
-                    worker_name = "emp_name";
-                    worker_contact = "emp_contact";
-                    worker_status = "emp_status";
-                    workerDB = "TempEmployees";
-                    workerRes = "employee";
-                    workerFail = "an employee";
-                } else {
-                    worker_name = "manager_name";
-                    worker_contact = "manager_contact";
-                    worker_status = "manager_status";
-                    workerDB = "TempManagers";
-                    workerRes = "manager";
-                    workerFail = "a manager";
-                }
-
-                Log.e("addWorker","Proceed 05");
+                String worker_name= (workerType.equals("Employee")) ? "emp_name" : "manager_name";
+                String worker_contact= (workerType.equals("Employee")) ? "emp_contact" : "manager_contact";
+                String worker_status= (workerType.equals("Employee")) ? "emp_status" : "manager_status";
+                String worker_ccode= (workerType.equals("Employee")) ? "emp_countrycode" : "manager_countrycode";
+                String workerDB= (workerType.equals("Employee")) ? "TempEmployees" : "TempManagers";
+                String workerRes= (workerType.equals("Employee")) ? "employee" : "manager";
+                String workerFail= (workerType.equals("Employee")) ? "an employee" : "a manager";
 
                 Map<String, Object> worker_details = new HashMap<>();
                 worker_details.put(worker_name, emp_name);
                 worker_details.put(worker_contact, emp_contact);
                 worker_details.put(worker_status, false);
+                worker_details.put(worker_ccode, aw_btm_countrycode.getSelectedCountryCodeWithPlus());
                 worker_details.put("company_path", company_path);
-
-                Log.e("addWorker","Proceed 06");
 
                 db.collection(workerDB)
                         .add(worker_details)
                         .addOnCompleteListener(task -> {
-                            Log.e("addWorker","Proceed 07");
                             addemp_btm_dialog.dismiss();
                             if (task.isSuccessful()) {
-                                Log.e("addWorker","Proceed 08");
                                 Snackbar.make(workersfrag_mainlay, "New " + workerRes + " added successfully.", Snackbar.LENGTH_SHORT).show();
                                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_mainlay, new WorkersFragment()).commit();
                             } else {
-                                Log.e("addWorker","Proceed 09");
                                 Snackbar.make(workersfrag_mainlay, "Unable to add " + workerFail + " !! Please try again.", Snackbar.LENGTH_SHORT).show();
                             }
                         });
             }
             else{
-                Log.e("addWorker","Proceed 03");
                 Snackbar.make(workersfrag_mainlay,"Unable to add new worker for the time being. Please try later !!", Snackbar.LENGTH_SHORT).show();
             }
         });

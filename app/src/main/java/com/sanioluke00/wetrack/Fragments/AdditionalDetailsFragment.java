@@ -23,11 +23,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sanioluke00.wetrack.Activities.HomeActivity;
 import com.sanioluke00.wetrack.DataModels.Functions;
@@ -64,7 +67,7 @@ public class AdditionalDetailsFragment extends Fragment {
 
         viewInits(v);
 
-        Log.e("gender_checked","The gender of the user is "+adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId());
+        Log.e("gender_checked", "The gender of the user is " + adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId());
 
         if (getArguments() != null) {
             phonenum = getArguments().getString("reg_phonenum");
@@ -121,15 +124,35 @@ public class AdditionalDetailsFragment extends Fragment {
                                             .addOnSuccessListener(unused -> {
                                                 new Functions().putSharedPrefsValue(getContext(), "user_data", "login_status", "boolean", true);
                                                 new Functions().putSharedPrefsValue(getContext(), "user_data", "full_name", "string", adddetailsfrag_pfullname.getEditText().getText().toString());
+                                                new Functions().putSharedPrefsValue(getContext(), "user_data", "gender", "String", gender);
                                                 new Functions().putSharedPrefsValue(getContext(), "user_data", "country_code", "string", countrycode);
                                                 new Functions().putSharedPrefsValue(getContext(), "user_data", "contact_num", "string", phonenum);
                                                 new Functions().putSharedPrefsValue(getContext(), "user_data", "email_id", "string", adddetailsfrag_pemailid.getEditText().getText().toString());
                                                 new Functions().putSharedPrefsValue(getContext(), "user_data", "company_path", "string", company_path.getPath());
                                                 new Functions().putSharedPrefsValue(getContext(), "user_data", "isDetailsAdded", "boolean", true);
 
-                                                // Log.e("company_path","The company path is : "+company_path);
-                                                // Log.e("company_path","The company path is "+new Functions().getSharedPrefsValue(getContext(),"user_data","company_path","string",null));
+                                                company_path.get()
+                                                        .addOnCompleteListener(task1 -> {
+                                                            if (task1.isSuccessful()) {
+                                                                String cname = task1.getResult().getString("company_name");
+                                                                String clocation = task1.getResult().getString("company_location");
+                                                                String cservices = task1.getResult().getString("company_services");
+                                                                String cexp = task1.getResult().getString("company_year_exp");
+                                                                String ccontact = task1.getResult().getString("company_contactnum");
 
+                                                                new Functions().putSharedPrefsValue(getContext(), "user_data", "company_name", "string", cname);
+                                                                new Functions().putSharedPrefsValue(getContext(), "user_data", "company_location", "string", clocation);
+                                                                new Functions().putSharedPrefsValue(getContext(), "user_data", "company_services", "string", cservices);
+                                                                new Functions().putSharedPrefsValue(getContext(), "user_data", "company_contact", "string", ccontact);
+                                                                new Functions().putSharedPrefsValue(getContext(), "user_data", "company_exp", "string", cexp);
+                                                            } else {
+                                                                new Functions().putSharedPrefsValue(getContext(), "user_data", "company_name", "string", "No Data");
+                                                                new Functions().putSharedPrefsValue(getContext(), "user_data", "company_location", "string", "No Data");
+                                                                new Functions().putSharedPrefsValue(getContext(), "user_data", "company_services", "string", "No Data");
+                                                                new Functions().putSharedPrefsValue(getContext(), "user_data", "company_contact", "string", "No Data");
+                                                                new Functions().putSharedPrefsValue(getContext(), "user_data", "company_exp", "string", "No Data");
+                                                            }
+                                                        });
                                                 loading_txt.setText("Data Entered Successfully. Going to home page.");
                                                 new Handler().postDelayed(() -> {
                                                     success_msgdialog.dismiss();
@@ -249,11 +272,10 @@ public class AdditionalDetailsFragment extends Fragment {
             String ccontactnum = adddetailsfrag_ccontactnum.getEditText().getText().toString();
             int exp_num = cyearsexp.equals("") ? 0 : Integer.parseInt(cyearsexp);
 
-            if(adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId()==-1){
+            if (adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId() == -1) {
                 adddetailsfrag_gender_error.setVisibility(View.VISIBLE);
                 updateNextButtonStyle("#DADADA", false);
-            }
-            else{
+            } else {
                 updateNextButtonStyle("#00A3FF", true);
                 adddetailsfrag_gender_error.setVisibility(View.GONE);
             }
@@ -297,7 +319,7 @@ public class AdditionalDetailsFragment extends Fragment {
                     updateNextButtonStyle("#00A3FF", true);
                 } else {
                     updateNextButtonStyle("#DADADA", false);
-                    if(adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId()==-1){
+                    if (adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId() == -1) {
                         adddetailsfrag_gender_error.setVisibility(View.VISIBLE);
                     }
                 }
@@ -337,7 +359,7 @@ public class AdditionalDetailsFragment extends Fragment {
                     updateNextButtonStyle("#00A3FF", true);
                 } else {
                     updateNextButtonStyle("#DADADA", false);
-                    if(adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId()==-1){
+                    if (adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId() == -1) {
                         adddetailsfrag_gender_error.setVisibility(View.VISIBLE);
                     }
                 }
@@ -377,7 +399,7 @@ public class AdditionalDetailsFragment extends Fragment {
                     updateNextButtonStyle("#00A3FF", true);
                 } else {
                     updateNextButtonStyle("#DADADA", false);
-                    if(adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId()==-1){
+                    if (adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId() == -1) {
                         adddetailsfrag_gender_error.setVisibility(View.VISIBLE);
                     }
                 }
@@ -417,7 +439,7 @@ public class AdditionalDetailsFragment extends Fragment {
                     updateNextButtonStyle("#00A3FF", true);
                 } else {
                     updateNextButtonStyle("#DADADA", false);
-                    if(adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId()==-1){
+                    if (adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId() == -1) {
                         adddetailsfrag_gender_error.setVisibility(View.VISIBLE);
                     }
                 }
@@ -457,7 +479,7 @@ public class AdditionalDetailsFragment extends Fragment {
                     updateNextButtonStyle("#00A3FF", true);
                 } else {
                     updateNextButtonStyle("#DADADA", false);
-                    if(adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId()==-1){
+                    if (adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId() == -1) {
                         adddetailsfrag_gender_error.setVisibility(View.VISIBLE);
                     }
                 }
@@ -471,11 +493,11 @@ public class AdditionalDetailsFragment extends Fragment {
         return v;
     }
 
-    private boolean getGenderChecked(){
-        int checked= adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId();
-        int male= adddetailsfrag_pmale_btn.getId();
-        int female= adddetailsfrag_pfemale_btn.getId();
-        int others= adddetailsfrag_pother_btn.getId();
+    private boolean getGenderChecked() {
+        int checked = adddetailsfrag_pgender_radiogrp.getCheckedRadioButtonId();
+        int male = adddetailsfrag_pmale_btn.getId();
+        int female = adddetailsfrag_pfemale_btn.getId();
+        int others = adddetailsfrag_pother_btn.getId();
         return checked == male || (checked == female || (checked == others));
     }
 

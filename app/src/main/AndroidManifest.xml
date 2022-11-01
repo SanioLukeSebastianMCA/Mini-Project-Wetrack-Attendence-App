@@ -31,6 +31,15 @@
         android:theme="@style/Theme.WeTrack"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.AppSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AccountInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.PersonalInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.SelectUserActivity"
             android:exported="false" />
         <activity

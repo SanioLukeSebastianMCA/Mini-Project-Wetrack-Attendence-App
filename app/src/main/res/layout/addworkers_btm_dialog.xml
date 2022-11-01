@@ -42,23 +42,46 @@
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/aw_btm_phone"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:boxStrokeColor="#121111">
+        android:orientation="horizontal"
+        android:weightSum="5">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/poppins"
-            android:hint="Mobile Number"
-            android:inputType="phone"
-            android:maxLength="10"
-            android:textColor="@color/black" />
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/aw_btm_countrycode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            app:ccpDialog_textColor="@color/black"
+            app:ccp_contentColor="@color/black"
+            app:ccp_defaultPhoneCode="91"
+            app:ccp_flagBorderColor="@android:color/transparent"
+            app:ccp_showNameCode="false" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/aw_btm_phone"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="3.5"
+            app:boxStrokeColor="#121111">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/poppins"
+                android:hint="Mobile Number"
+                android:inputType="phone"
+                android:textColor="@color/black"
+                android:maxLength="10" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/aw_btm_add_btn"
@@ -66,8 +89,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="20dp"
+        android:background="@drawable/curve_border"
         app:backgroundTint="#121111"
-        android:backgroundTint="#121111"
         android:fontFamily="@font/poppins_semibold"
         android:paddingHorizontal="20dp"
         android:text="Add Employee"

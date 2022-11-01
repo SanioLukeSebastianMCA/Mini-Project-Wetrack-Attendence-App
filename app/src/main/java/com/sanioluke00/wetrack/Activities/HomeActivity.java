@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
+import com.sanioluke00.wetrack.DataModels.Functions;
 import com.sanioluke00.wetrack.Fragments.AttendanceFragment;
 import com.sanioluke00.wetrack.Fragments.HomeFragment;
 import com.sanioluke00.wetrack.Fragments.ProfileFragment;

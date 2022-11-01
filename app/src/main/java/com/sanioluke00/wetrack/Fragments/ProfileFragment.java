@@ -15,6 +15,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.sanioluke00.wetrack.Activities.AccountInfoActivity;
+import com.sanioluke00.wetrack.Activities.AppSettingsActivity;
+import com.sanioluke00.wetrack.Activities.PersonalInfoActivity;
 import com.sanioluke00.wetrack.Activities.SelectUserActivity;
 import com.sanioluke00.wetrack.DataModels.Functions;
 import com.sanioluke00.wetrack.R;
@@ -24,6 +27,8 @@ public class ProfileFragment extends Fragment {
 
     Button profilefrag_logout_btn;
     View profilefrag_mainlay;
+    View prof_profile_settings, prof_acc_settings;
+    View prof_app_settings, prof_aboutus, prof_faqs, prof_contactus, prof_feedback, prof_privacy;
 
     private FirebaseFirestore db;
     private FirebaseAuth firebaseAuth;
@@ -40,6 +45,22 @@ public class ProfileFragment extends Fragment {
 
         profilefrag_mainlay= v.findViewById(R.id.profilefrag_mainlay);
         profilefrag_logout_btn = v.findViewById(R.id.profilefrag_logout_btn);
+
+        prof_profile_settings= v.findViewById(R.id.prof_profile_settings);
+        prof_acc_settings= v.findViewById(R.id.prof_acc_settings);
+        prof_app_settings= v.findViewById(R.id.prof_app_settings);
+        prof_aboutus= v.findViewById(R.id.prof_aboutus);
+        prof_faqs= v.findViewById(R.id.prof_faqs);
+        prof_contactus= v.findViewById(R.id.prof_contactus);
+        prof_feedback= v.findViewById(R.id.prof_feedback);
+        prof_privacy= v.findViewById(R.id.prof_privacy);
+
+        prof_profile_settings.setOnClickListener(v1-> startActivity(new Intent(getContext(), PersonalInfoActivity.class)));
+
+        prof_acc_settings.setOnClickListener(v1-> startActivity(new Intent(getContext(), AccountInfoActivity.class)));
+
+        prof_app_settings.setOnClickListener(v1-> startActivity(new Intent(getContext(), AppSettingsActivity.class)));
+
         firebaseAuth= FirebaseAuth.getInstance();
         firebaseUser= firebaseAuth.getCurrentUser();
 

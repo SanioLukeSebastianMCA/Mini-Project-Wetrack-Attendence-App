@@ -11,403 +11,378 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/profile_back_img"
-            android:layout_width="match_parent"
-            android:layout_height="270dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/profilefrag_bg"
-            app:layout_collapseMode="parallax" />
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/profile_back_img"
-            android:layout_marginTop="-20dp"
-            android:elevation="10dp"
-            android:background="@drawable/top_curve_shape">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/prof_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Hi, I'm Username"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
-
-            <TextView
-                android:id="@+id/prof_joined"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/prof_username"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/poppins_light"
-                android:text="Joined in April, 2020" />
-
-            <LinearLayout
-                android:id="@+id/info_settings"
+            <ImageView
+                android:id="@+id/profile_back_img"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/prof_joined"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="40dp"
-                android:orientation="vertical">
+                android:layout_height="270dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profilefrag_bg"
+                app:layout_collapseMode="parallax" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/profile_back_img"
+                android:layout_marginTop="-20dp"
+                android:elevation="10dp"
+                android:background="@drawable/top_curve_shape">
 
                 <TextView
+                    android:id="@+id/prof_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Information Settings"
-                    android:textColor="@color/black"
-                    android:textAllCaps="true"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/prof_person_settings"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:orientation="horizontal"
-                    android:paddingVertical="15dp"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="TODO"
-                        android:src="@drawable/ic_userprofile"
-                        app:tint="@color/v_maincolor"
-                        tools:ignore="ContentDescription,HardcodedText" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginStart="30dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="Personal Information"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-
-                <LinearLayout
-                    android:id="@+id/prof_buss_settings"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:orientation="horizontal"
-                    android:paddingVertical="15dp"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_business"
-                        app:tint="@color/v_maincolor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginStart="30dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="Business Information"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-
-                <LinearLayout
-                    android:id="@+id/prof_acc_settings"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:orientation="horizontal"
-                    android:paddingVertical="15dp"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_account"
-                        app:tint="@color/v_maincolor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginStart="30dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="Account Information"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/app_settings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/info_settings"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="40dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Appication Informatiomn"
-                    android:textAllCaps="true"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/prof_app_settings"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:orientation="horizontal"
-                    android:paddingVertical="15dp"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="TODO"
-                        android:src="@drawable/ic_settings"
-                        app:tint="@color/v_maincolor"
-                        tools:ignore="ContentDescription,HardcodedText" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginStart="30dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="Main Settings"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-
-                <LinearLayout
-                    android:id="@+id/prof_aboutus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:orientation="horizontal"
-                    android:paddingVertical="15dp"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_info"
-                        app:tint="@color/v_maincolor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginStart="30dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="About Us"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-
-                <LinearLayout
-                    android:id="@+id/prof_faqs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:orientation="horizontal"
-                    android:paddingVertical="15dp"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_info"
-                        app:tint="@color/v_maincolor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginStart="30dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="FAQs"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/app_settings"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="80dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Communications and Motives"
-                    android:textColor="@color/black"
-                    android:textAllCaps="true"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/prof_contactus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:orientation="horizontal"
-                    android:paddingVertical="15dp"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="TODO"
-                        android:src="@drawable/ic_local_phone"
-                        app:tint="@color/v_maincolor"
-                        tools:ignore="ContentDescription,HardcodedText" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginStart="30dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="Contact Us"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp" />
-
-                <LinearLayout
-                    android:id="@+id/prof_feedback"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:orientation="horizontal"
-                    android:paddingVertical="15dp"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_feedback"
-                        app:tint="@color/v_maincolor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginStart="30dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="Give Us Feedback"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp" />
-
-                <LinearLayout
-                    android:id="@+id/prof_privacy"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:orientation="horizontal"
-                    android:paddingVertical="15dp"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_privacy"
-                        app:tint="@color/v_maincolor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginStart="30dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="Terms and Conditions"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp" />
-
-                <Button
-                    android:id="@+id/profilefrag_logout_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="@drawable/circle_shape"
-                    android:drawablePadding="10dp"
-                    android:drawableTint="@color/white"
-                    android:textColor="@color/white"
                     android:fontFamily="@font/poppins_semibold"
-                    android:paddingHorizontal="60dp"
-                    android:text="logout"
-                    app:backgroundTint="@color/v_maincolor" />
+                    android:text="Hi, I'm Username"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/prof_joined"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/prof_username"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_light"
+                    android:text="Joined in April, 2020" />
+
+                <LinearLayout
+                    android:id="@+id/info_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/prof_joined"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="40dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Information Settings"
+                        android:textColor="@color/black"
+                        android:textAllCaps="true"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/prof_profile_settings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:orientation="horizontal"
+                        android:paddingVertical="15dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="TODO"
+                            android:src="@drawable/ic_userprofile"
+                            app:tint="@color/v_maincolor"
+                            tools:ignore="ContentDescription,HardcodedText" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="30dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Profile Information"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/prof_acc_settings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:orientation="horizontal"
+                        android:paddingVertical="15dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_account"
+                            app:tint="@color/v_maincolor" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="30dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Account Information"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/app_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/info_settings"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="40dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Appication Informatiomn"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/prof_app_settings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:orientation="horizontal"
+                        android:paddingVertical="15dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="TODO"
+                            android:src="@drawable/ic_settings"
+                            app:tint="@color/v_maincolor"
+                            tools:ignore="ContentDescription,HardcodedText" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="30dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Main Settings"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/prof_aboutus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:orientation="horizontal"
+                        android:paddingVertical="15dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_info"
+                            app:tint="@color/v_maincolor" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="30dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="About Us"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/prof_faqs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:orientation="horizontal"
+                        android:paddingVertical="15dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_info"
+                            app:tint="@color/v_maincolor" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="30dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="FAQs"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/app_settings"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="80dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Communications and Motives"
+                        android:textColor="@color/black"
+                        android:textAllCaps="true"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/prof_contactus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:orientation="horizontal"
+                        android:paddingVertical="15dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="TODO"
+                            android:src="@drawable/ic_local_phone"
+                            app:tint="@color/v_maincolor"
+                            tools:ignore="ContentDescription,HardcodedText" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="30dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Contact Us"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <LinearLayout
+                        android:id="@+id/prof_feedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:orientation="horizontal"
+                        android:paddingVertical="15dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_feedback"
+                            app:tint="@color/v_maincolor" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="30dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Give Us Feedback"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <LinearLayout
+                        android:id="@+id/prof_privacy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:orientation="horizontal"
+                        android:paddingVertical="15dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_privacy"
+                            app:tint="@color/v_maincolor" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="30dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Terms and Conditions"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <Button
+                        android:id="@+id/profilefrag_logout_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/circle_shape"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="@color/white"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:paddingHorizontal="60dp"
+                        android:text="logout"
+                        app:backgroundTint="@color/v_maincolor" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

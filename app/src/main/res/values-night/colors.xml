@@ -6,10 +6,10 @@
     <color name="home_bottom_navbg">#F6F6F6</color>
     <color name="third_white">#F8F6F6</color>
     <color name="third_black">#FF232425</color>
-    <color name="white_dia">#F4F4F4</color>
+    <color name="white_dia">#4E4C4C</color>
     <color name="black_no">#131313</color>
-    <color name="hm_color">#F6F5F8</color>
-    <color name="heading">#F4F4F4</color>
+    <color name="hm_color">#272626</color>
+    <color name="heading">#232323</color>
     <color name="heading_no">#232323</color>
     <color name="dark_blue">#001068</color>
     <color name="purple_200">#BB86FC</color>
@@ -18,20 +18,20 @@
     <color name="select_color">#FF3C3C</color>
     <color name="teal_200">#00FFD9</color>
     <color name="teal_700">#018786</color>
-    <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
-    <color name="offwhite">#E8E8E8</color>
-    <color name="second_white">#FBFBFB</color>
+    <color name="black">#FFFFFF</color>
+    <color name="white">#000000</color>
+    <color name="offwhite">#9F9F9F</color>
+    <color name="second_white">#474444</color>
     <color name="primary_blue">#6200EE</color>
     <color name="dark_blue_color">#002A7C</color>
-    <color name="main_color">#0064C8</color>
-    <color name="second_color">#0080FF</color>
-    <color name="light_color">#4990FF</color>
-    <color name="light_dark">#9F9F9F</color>
+    <color name="main_color">#44A2FF</color>
+    <color name="second_color">#7ABDFF</color>
+    <color name="light_color">#9BC1FF</color>
+    <color name="light_dark">#F8F6F6</color>
     <color name="toolbar_color">#1B1C1C</color>
     <color name="pages_backcolor">#F4F4F4</color>
-    <color name="main_titlecolor">#433A3A</color>
-    <color name="second_black">#232425</color>
+    <color name="main_titlecolor">#F8F6F6</color>
+    <color name="second_black">#F8F6F6</color>
     <color name="mid_black">#575757</color>
     <color name="trans_black">#6B0B0B0B</color>
     <color name="my_red">#FF4141</color>
@@ -42,9 +42,9 @@
     <color name="light_grey">#DFDFDF</color>
     <color name="my_grey">#F8F8F8</color>
     <color name="AppNavigationBarColor">#555555</color>
-    <color name="order_check_in_yes">#F4F4F4</color>
+    <color name="order_check_in_yes">#131313</color>
     <color name="order_check_in_no">#F4F4F4</color>
 
-    <color name="status_black">#131313</color>
-    <color name="status_white">#F4F4F4</color>
+    <color name="status_black">#232323</color>
+    <color name="status_white">#232323</color>
 </resources>
