@@ -18,8 +18,10 @@
     <color name="select_color">#FF3C3C</color>
     <color name="teal_200">#00FFD9</color>
     <color name="teal_700">#018786</color>
-    <color name="black">#FFFFFF</color>
-    <color name="white">#000000</color>
+    <!--    <color name="black">#FFFFFF</color>-->
+    <!--    <color name="white">#000000</color>-->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
     <color name="offwhite">#9F9F9F</color>
     <color name="second_white">#474444</color>
     <color name="primary_blue">#6200EE</color>

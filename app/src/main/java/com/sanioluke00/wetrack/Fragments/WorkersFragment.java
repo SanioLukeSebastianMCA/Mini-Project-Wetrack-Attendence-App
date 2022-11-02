@@ -1,9 +1,12 @@
 package com.sanioluke00.wetrack.Fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -12,8 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,6 +51,9 @@ public class WorkersFragment extends Fragment {
     RecyclerView workerfrag_ml, workerfrag_el;
     Button workerfrag_ml_more, workerfrag_el_more;
     TextView workerfrag_addmanager, workerfrag_addemployee;
+
+    TextInputLayout aw_btm_name, aw_btm_phone;
+    CountryCodePicker aw_btm_countrycode;
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
@@ -142,9 +151,9 @@ public class WorkersFragment extends Fragment {
         addemp_btm_dialog.setContentView(R.layout.addworkers_btm_dialog);
         addemp_btm_dialog.setCanceledOnTouchOutside(true);
         addemp_btm_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        TextInputLayout aw_btm_name = addemp_btm_dialog.findViewById(R.id.aw_btm_name);
-        TextInputLayout aw_btm_phone = addemp_btm_dialog.findViewById(R.id.aw_btm_phone);
-        CountryCodePicker aw_btm_countrycode= addemp_btm_dialog.findViewById(R.id.aw_btm_countrycode);
+        aw_btm_name = addemp_btm_dialog.findViewById(R.id.aw_btm_name);
+        aw_btm_phone = addemp_btm_dialog.findViewById(R.id.aw_btm_phone);
+        aw_btm_countrycode= addemp_btm_dialog.findViewById(R.id.aw_btm_countrycode);
         Button aw_btm_add_btn = addemp_btm_dialog.findViewById(R.id.aw_btm_add_btn);
 
         aw_btm_add_btn.setEnabled(false);
@@ -233,6 +242,19 @@ public class WorkersFragment extends Fragment {
                         .addOnCompleteListener(task -> {
                             addemp_btm_dialog.dismiss();
                             if (task.isSuccessful()) {
+                                String emp_phoneno= aw_btm_countrycode.getSelectedCountryCodeWithPlus() + emp_contact;
+                                SmsManager smsManager = SmsManager.getDefault();
+                                smsManager.sendTextMessage(emp_phoneno, null, "Hello we have added you as our employees. Please install WeTrack App and login to your account using your phone number.", null, null);
+                                Toast.makeText(getContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+
+                                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+                                        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.SEND_SMS)) {
+
+                                        } else {
+                                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.SEND_SMS}, 100);
+                                        }
+                                }
+
                                 Snackbar.make(workersfrag_mainlay, "New " + workerRes + " added successfully.", Snackbar.LENGTH_SHORT).show();
                                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_mainlay, new WorkersFragment()).commit();
                             } else {
@@ -266,4 +288,20 @@ public class WorkersFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 100: {
+
+                String emp_contact = aw_btm_countrycode.getSelectedCountryCodeWithPlus() + aw_btm_phone.getEditText().getText().toString();
+                Log.e("emp_contact","The phone number is : "+emp_contact);
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    Toast.makeText(getContext(), "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+        }
+    }
 }
